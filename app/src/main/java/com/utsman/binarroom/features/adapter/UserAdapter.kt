@@ -1,8 +1,10 @@
-package com.utsman.binarroom
+package com.utsman.binarroom.features.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.utsman.binarroom.R
+import com.utsman.binarroom.model.User
 
 class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
     private val userList: MutableList<User> = mutableListOf()

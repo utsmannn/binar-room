@@ -1,22 +1,23 @@
-package com.utsman.binarroom
+package com.utsman.binarroom.features.insert.activity
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.utsman.binarroom.model.User
+import com.utsman.binarroom.sources.UserDao
+import com.utsman.binarroom.sources.UserDatabase
 import com.utsman.binarroom.databinding.ActivityInsertBinding
+import com.utsman.binarroom.features.insert.presenter.InsertPresenter
+import com.utsman.binarroom.features.insert.presenter.InsertPresenterImpl
+import com.utsman.binarroom.view.InsertView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class InsertActivity : AppCompatActivity() {
+class InsertActivity : AppCompatActivity(), InsertView {
     private var _binding: ActivityInsertBinding? = null
     private lateinit var binding: ActivityInsertBinding
 
-    private val userDatabase: UserDatabase? by lazy {
-        UserDatabase.getInstance(this)
-    }
-
-    private val userDao: UserDao? by lazy {
-        userDatabase?.userDao()
-    }
+    private val insertPresenter: InsertPresenter = InsertPresenterImpl(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,10 @@ class InsertActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupView()
+    }
+
+    override fun context(): Context {
+        return this
     }
 
     private fun setupView() {
@@ -37,20 +42,14 @@ class InsertActivity : AppCompatActivity() {
                 age = age
             )
 
-            saveToDatabase(newUser)
+            insertPresenter.saveToDatabase(newUser)
         }
     }
 
-    private fun saveToDatabase(user: User) {
-        GlobalScope.launch {
-            val addUser = userDao?.addUser(user)
-            println("aaaa add user -> $addUser")
-
-            runOnUiThread {
-                binding.etName.setText("")
-                binding.etAge.setText("")
-            }
-        }
+    override fun onSaveDatabase() {
+        binding.etName.setText("")
+        binding.etAge.setText("")
+        onBackPressed()
     }
 
     override fun onDestroy() {

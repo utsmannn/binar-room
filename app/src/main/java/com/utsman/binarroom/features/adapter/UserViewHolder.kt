@@ -1,9 +1,11 @@
-package com.utsman.binarroom
+package com.utsman.binarroom.features.adapter
 
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.utsman.binarroom.model.User
 import com.utsman.binarroom.databinding.ItemUserBinding
+import com.utsman.binarroom.features.activity.UpdateActivity
 
 class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

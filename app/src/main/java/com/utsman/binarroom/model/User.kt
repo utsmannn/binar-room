@@ -1,4 +1,4 @@
-package com.utsman.binarroom
+package com.utsman.binarroom.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

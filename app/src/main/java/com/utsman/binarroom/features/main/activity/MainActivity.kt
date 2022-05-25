@@ -1,33 +1,26 @@
-package com.utsman.binarroom
+package com.utsman.binarroom.features.main.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.utsman.binarroom.model.User
+import com.utsman.binarroom.sources.UserDatabase
 import com.utsman.binarroom.databinding.ActivityMainBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.utsman.binarroom.features.insert.activity.InsertActivity
+import com.utsman.binarroom.features.adapter.UserAdapter
+import com.utsman.binarroom.features.main.presenter.MainPresenter
+import com.utsman.binarroom.features.main.presenter.MainPresenterImpl
+import com.utsman.binarroom.view.MainView
 
-class MainActivity : AppCompatActivity() {
-
-    private val userDummy = listOf(
-        User(name = "Fajri", age = 20),
-        User(name = "Wahyu", age = 23),
-        User(name = "Nindi", age = 19)
-    )
+class MainActivity : AppCompatActivity(), MainView {
 
     private val userAdapter = UserAdapter()
+    private val mainPresenter: MainPresenter = MainPresenterImpl(this)
 
     private var _binding: ActivityMainBinding? = null
     private lateinit var binding: ActivityMainBinding
-
-    private val userDatabase: UserDatabase? by lazy {
-        UserDatabase.getInstance(this)
-    }
-
-    private val userDao: UserDao? by lazy {
-        userDatabase?.userDao()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +28,13 @@ class MainActivity : AppCompatActivity() {
         binding = requireNotNull(_binding)
 
         setContentView(binding.root)
+
         setupView()
+        mainPresenter.getDatabase()
+    }
+
+    override fun context(): Context {
+        return this
     }
 
     private fun setupView() {
@@ -47,17 +46,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, InsertActivity::class.java)
             startActivity(intent)
         }
-
-        getUserDatabase()
     }
 
-    private fun getUserDatabase() {
-        GlobalScope.launch {
-            val userData = userDao?.getAllUser().orEmpty()
-            runOnUiThread {
-                userAdapter.addList(userData)
-            }
-        }
+    override fun onResultDatabase(users: List<User>) {
+        userAdapter.addList(users)
     }
 
     override fun onDestroy() {
@@ -68,6 +60,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        getUserDatabase()
+        mainPresenter.getDatabase()
     }
 }

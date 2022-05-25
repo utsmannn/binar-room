@@ -14,7 +14,7 @@
         android:theme="@style/Theme.BinarRoom"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".features.main.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InsertActivity"/>
-        <activity android:name=".UpdateActivity"/>
+        <activity android:name=".features.insert.activity.InsertActivity"/>
+        <activity android:name=".features.activity.UpdateActivity"/>
     </application>
 
 </manifest>

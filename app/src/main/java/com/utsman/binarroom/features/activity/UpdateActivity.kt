@@ -1,7 +1,10 @@
-package com.utsman.binarroom
+package com.utsman.binarroom.features.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.utsman.binarroom.model.User
+import com.utsman.binarroom.sources.UserDao
+import com.utsman.binarroom.sources.UserDatabase
 import com.utsman.binarroom.databinding.ActivityUpdateBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
