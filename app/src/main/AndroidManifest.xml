@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".features.insert.activity.InsertActivity"/>
         <activity android:name=".features.activity.UpdateActivity"/>
+        <activity android:name="com.utsman.binarroom.features.second.SecondActivity"/>
     </application>
 
 </manifest>

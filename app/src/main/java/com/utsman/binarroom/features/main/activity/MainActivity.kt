@@ -12,6 +12,7 @@ import com.utsman.binarroom.features.insert.activity.InsertActivity
 import com.utsman.binarroom.features.adapter.UserAdapter
 import com.utsman.binarroom.features.main.presenter.MainPresenter
 import com.utsman.binarroom.features.main.presenter.MainPresenterImpl
+import com.utsman.binarroom.features.second.SecondActivity
 import com.utsman.binarroom.view.MainView
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -30,7 +31,12 @@ class MainActivity : AppCompatActivity(), MainView {
         setContentView(binding.root)
 
         setupView()
+        setupCounter()
         mainPresenter.getDatabase()
+    }
+
+    private fun setupCounter() {
+
     }
 
     override fun context(): Context {
@@ -44,6 +50,10 @@ class MainActivity : AppCompatActivity(), MainView {
 
         binding.mainFab.setOnClickListener {
             val intent = Intent(this, InsertActivity::class.java)
+            startActivity(intent)
+        }
+        binding.secondFab.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
             startActivity(intent)
         }
     }
@@ -61,5 +71,6 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onResume() {
         super.onResume()
         mainPresenter.getDatabase()
+        println("on resume................")
     }
 }
